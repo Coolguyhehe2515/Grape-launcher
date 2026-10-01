@@ -40,9 +40,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.ui.input.pointer.awaitPointerEvent
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.window.Dialog
@@ -181,25 +179,27 @@ fun SkinEditorDialog(
                         modifier = Modifier
                             .fillMaxSize()
                             .pointerInput(selectedColor) {
-                                awaitEachGesture {
-                                    awaitFirstDown()
-                                    var keepDrawing = true
-                                    while (keepDrawing) {
-                                        val event = awaitPointerEvent()
-                                        event.changes.forEach { change ->
-                                            val x = floor(change.position.x / size.width * bitmap.width).toInt()
-                                            val y = floor(change.position.y / size.height * bitmap.height).toInt()
-
-                                            if (x in 0 until bitmap.width && y in 0 until bitmap.height) {
-                                                val edited = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-                                                edited.setPixel(x, y, selectedColor.toArgb())
-                                                bitmap = edited
-                                            }
-                                            change.consume()
+                                detectDragGestures(
+                                    onDragStart = { offset ->
+                                        val x = floor(offset.x / size.width * bitmap.width).toInt()
+                                        val y = floor(offset.y / size.height * bitmap.height).toInt()
+                                        if (x in 0 until bitmap.width && y in 0 until bitmap.height) {
+                                            val edited = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                                            edited.setPixel(x, y, selectedColor.toArgb())
+                                            bitmap = edited
                                         }
-                                        keepDrawing = event.changes.any { it.pressed }
+                                    },
+                                    onDrag = { change, _ ->
+                                        val x = floor(change.position.x / size.width * bitmap.width).toInt()
+                                        val y = floor(change.position.y / size.height * bitmap.height).toInt()
+                                        if (x in 0 until bitmap.width && y in 0 until bitmap.height) {
+                                            val edited = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                                            edited.setPixel(x, y, selectedColor.toArgb())
+                                            bitmap = edited
+                                        }
+                                        change.consume()
                                     }
-                                }
+                                )
                             }
                     ) {
                         drawImage(
