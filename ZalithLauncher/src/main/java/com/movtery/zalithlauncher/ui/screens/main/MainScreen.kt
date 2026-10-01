@@ -373,71 +373,50 @@ private fun <E: TitledNavKey> TopBar(
                         bottom.linkTo(parent.bottom)
                         end.linkTo(parent.end, margin = 12.dp)
                     },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                AnimatedVisibility(
-                    visible = !(isTasksExpanded || taskRunning),
-                    enter = slideInVertically(
-                        initialOffsetY = { -50 }
-                    ) + fadeIn(),
-                    exit = slideOutVertically(
-                        targetOffsetY = { -50 }
-                    ) + fadeOut()
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .clip(shape = MaterialTheme.shapes.large)
-                            .clickable { changeExpandedState() }
-                            .padding(all = 8.dp)
-                            .width(120.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        LinearProgressIndicator(modifier = Modifier.weight(1f))
+                if (inLauncherScreen) {
+                    TopBarRailItem(
+                        selected = false,
+                        painter = painterResource(R.drawable.ic_settings_filled),
+                        text = stringResource(R.string.generic_setting),
+                        onClick = toSettingsScreen
+                    )
+                } else {
+                    IconButton(onClick = openFileManager) {
                         Icon(
-                            modifier = Modifier.size(22.dp),
-                            painter = painterResource(R.drawable.ic_assignment_filled),
-                            contentDescription = stringResource(R.string.main_task_menu)
+                            painter = painterResource(R.drawable.ic_folder_filled),
+                            contentDescription = null
                         )
                     }
-                }
 
-                IconButton(
-                    onClick = openFileManager
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_folder_filled),
-                        contentDescription = null
+                    TopBarRailItem(
+                        selected = inMultiplayerScreen,
+                        painter = painterResource(R.drawable.ic_group_filled),
+                        text = stringResource(R.string.terracotta),
+                        onClick = {
+                            if (!inMultiplayerScreen) toMultiplayerScreen()
+                        },
+                    )
+
+                    TopBarRailItem(
+                        selected = inDownloadScreen,
+                        painter = painterResource(R.drawable.ic_download_2_filled),
+                        text = stringResource(R.string.generic_download),
+                        onClick = {
+                            if (!inDownloadScreen) toDownloadScreen()
+                        },
+                    )
+
+                    TopBarRailItem(
+                        selected = inSettingsScreen,
+                        painter = painterResource(R.drawable.ic_settings_filled),
+                        text = stringResource(R.string.generic_setting),
+                        onClick = {
+                            if (!inSettingsScreen) toSettingsScreen()
+                        },
                     )
                 }
-
-                TopBarRailItem(
-                    selected = inMultiplayerScreen,
-                    painter = painterResource(R.drawable.ic_group_filled),
-                    text = stringResource(R.string.terracotta),
-                    onClick = {
-                        if (!inMultiplayerScreen) toMultiplayerScreen()
-                    },
-                )
-
-                TopBarRailItem(
-                    selected = inDownloadScreen,
-                    painter = painterResource(R.drawable.ic_download_2_filled),
-                    text = stringResource(R.string.generic_download),
-                    onClick = {
-                        if (!inDownloadScreen) toDownloadScreen()
-                    },
-                )
-
-                TopBarRailItem(
-                    selected = inSettingsScreen,
-                    painter = painterResource(R.drawable.ic_settings_filled),
-                    text = stringResource(R.string.generic_setting),
-                    onClick = {
-                        if (!inSettingsScreen) toSettingsScreen()
-                    },
-                )
             }
         }
     }
