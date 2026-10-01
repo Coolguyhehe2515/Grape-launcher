@@ -228,6 +228,7 @@ fun LauncherScreen(
                 onDismiss = { showSkinChooser = false },
                 onMakeSkin = { showSkinEditor = true },
                 onImportSkin = { uri ->
+                    showSkinChooser = false
                     runCatching {
                         context.contentResolver.openInputStream(uri)?.use { input ->
                             account.getSkinFile().parentFile?.mkdirs()
