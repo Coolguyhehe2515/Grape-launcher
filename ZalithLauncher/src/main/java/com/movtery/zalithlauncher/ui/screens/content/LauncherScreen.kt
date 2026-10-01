@@ -224,15 +224,15 @@ fun LauncherScreen(
 
         if (showSkinChooser && currentAccount != null) {
             SkinChooserDialog(
-                account = account,
+                account = currentAccount,
                 onDismiss = { showSkinChooser = false },
                 onMakeSkin = { showSkinEditor = true },
                 onImportSkin = { uri ->
                     showSkinChooser = false
                     runCatching {
                         context.contentResolver.openInputStream(uri)?.use { input ->
-                            account.getSkinFile().parentFile?.mkdirs()
-                            account.getSkinFile().outputStream().use { output ->
+                            currentAccount.getSkinFile().parentFile?.mkdirs()
+                            currentAccount.getSkinFile().outputStream().use { output ->
                                 input.copyTo(output)
                             }
                         }
@@ -244,7 +244,7 @@ fun LauncherScreen(
 
         if (showSkinEditor && currentAccount != null) {
             SkinEditorDialog(
-                account = account,
+                account = currentAccount,
                 onDismiss = { showSkinEditor = false }
             )
         }
