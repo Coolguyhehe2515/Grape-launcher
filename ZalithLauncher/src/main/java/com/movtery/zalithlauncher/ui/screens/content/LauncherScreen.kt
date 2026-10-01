@@ -29,25 +29,31 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.game.account.AccountsManager
+import com.movtery.zalithlauncher.game.account.wardrobe.SkinModelType
 import com.movtery.zalithlauncher.game.version.installed.Version
 import com.movtery.zalithlauncher.game.version.installed.VersionsManager
 import com.movtery.zalithlauncher.ui.base.BaseScreen
 import com.movtery.zalithlauncher.ui.components.BackgroundCard
 import com.movtery.zalithlauncher.ui.components.ScalingActionButton
+import com.movtery.zalithlauncher.ui.components.SkinPreview3D
 import com.movtery.zalithlauncher.ui.screens.NormalNavKey
 import com.movtery.zalithlauncher.ui.screens.content.elements.PlayerFace
 import com.movtery.zalithlauncher.ui.screens.content.elements.VersionIconImage
@@ -67,9 +73,13 @@ fun LauncherScreen(
         screenKey = NormalNavKey.LauncherMain,
         currentKey = backStackViewModel.mainScreen.currentKey
     ) { isVisible ->
+        val context = LocalContext.current
         val account by AccountsManager.currentAccountFlow.collectAsStateWithLifecycle()
+        val refreshWardrobe by AccountsManager.refreshWardrobe.collectAsStateWithLifecycle()
         val versions by VersionsManager.versions.collectAsStateWithLifecycle()
         val isRefreshing by VersionsManager.isRefreshing.collectAsStateWithLifecycle()
+        var showSkinChooser by remember { mutableStateOf(false) }
+        var showSkinEditor by remember { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
             VersionsManager.refresh(
@@ -135,6 +145,40 @@ fun LauncherScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Box(
+                modifier = Modifier
+                    .size(230.dp)
+                    .clickable(enabled = account != null) {
+                        showSkinChooser = true
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                SkinPreview3D(
+                    skinFile = account?.getSkinFile()?.takeIf { it.exists() },
+                    capeFile = account?.getCapeFile()?.takeIf { it.exists() },
+                    modelType = account?.skinModelType?.takeIf { it != SkinModelType.NONE },
+                    modifier = Modifier.fillMaxSize(),
+                    refreshKey = refreshWardrobe
+                )
+            }
+
+            Text(
+                text = account?.username?.let { "Skin" } ?: "Sign in to customize your skin",
+                style = MaterialTheme.typography.labelLarge
+            )
+
+            Button(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .fillMaxWidth(),
+                enabled = account != null,
+                onClick = { showSkinChooser = true }
+            ) {
+                Text("Choose Skin")
+            }
+
             Spacer(modifier = Modifier.weight(1f))
 
             VersionIconImage(
@@ -176,6 +220,32 @@ fun LauncherScreen(
             }
 
             Spacer(modifier = Modifier.weight(1f))
+        }
+
+        if (showSkinChooser && account != null) {
+            SkinChooserDialog(
+                account = account,
+                onDismiss = { showSkinChooser = false },
+                onMakeSkin = { showSkinEditor = true },
+                onImportSkin = { uri ->
+                    runCatching {
+                        context.contentResolver.openInputStream(uri)?.use { input ->
+                            account.getSkinFile().parentFile?.mkdirs()
+                            account.getSkinFile().outputStream().use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                        AccountsManager.refreshWardrobe()
+                    }
+                }
+            )
+        }
+
+        if (showSkinEditor && account != null) {
+            SkinEditorDialog(
+                account = account,
+                onDismiss = { showSkinEditor = false }
+            )
         }
     }
 }
