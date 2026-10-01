@@ -76,6 +76,7 @@ fun LauncherScreen(
     ) { isVisible ->
         val context = LocalContext.current
         val account by AccountsManager.currentAccountFlow.collectAsStateWithLifecycle()
+        val currentAccount = account
         val refreshWardrobe by AccountsManager.refreshWardrobe.collectAsStateWithLifecycle()
         val versions by VersionsManager.versions.collectAsStateWithLifecycle()
         val isRefreshing by VersionsManager.isRefreshing.collectAsStateWithLifecycle()
@@ -105,9 +106,7 @@ fun LauncherScreen(
                 BackgroundCard(
                     modifier = Modifier.clickable {
                         backStackViewModel.mainScreen.navigateTo(
-                            screenKey = NormalNavKey.AccountManager(
-                                com.movtery.zalithlauncher.game.account.FirstLoginMenu.NONE
-                            )
+                            screenKey = NormalNavKey.AccountManager()
                         )
                     },
                     shape = MaterialTheme.shapes.large
@@ -117,9 +116,9 @@ fun LauncherScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        if (account != null) {
+                        if (currentAccount != null) {
                             PlayerFace(
-                                account = account,
+                                account = currentAccount,
                                 avatarSize = 42.dp
                             )
                         } else {
@@ -132,13 +131,13 @@ fun LauncherScreen(
 
                         Column {
                             Text(
-                                text = account?.username
+                                text = currentAccount?.username
                                     ?: stringResource(R.string.account_add_new_account),
                                 style = MaterialTheme.typography.titleSmall,
                                 maxLines = 1
                             )
                             Text(
-                                text = stringResource(R.string.generic_account),
+                                text = "Account",
                                 style = MaterialTheme.typography.labelSmall
                             )
                         }
@@ -151,15 +150,15 @@ fun LauncherScreen(
             Box(
                 modifier = Modifier
                     .size(230.dp)
-                    .clickable(enabled = account != null) {
+                    .clickable(enabled = currentAccount != null) {
                         showSkinChooser = true
                     },
                 contentAlignment = Alignment.Center
             ) {
                 SkinPreview3D(
-                    skinFile = account?.getSkinFile()?.takeIf { it.exists() },
-                    capeFile = account?.getCapeFile()?.takeIf { it.exists() },
-                    modelType = account?.skinModelType?.takeIf { it != SkinModelType.NONE },
+                    skinFile = currentAccount?.getSkinFile()?.takeIf { it.exists() },
+                    capeFile = currentAccount?.getCapeFile()?.takeIf { it.exists() },
+                    modelType = currentAccount?.skinModelType?.takeIf { it != SkinModelType.NONE },
                     modifier = Modifier.fillMaxSize(),
                     refreshKey = refreshWardrobe
                 )
@@ -223,7 +222,7 @@ fun LauncherScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        if (showSkinChooser && account != null) {
+        if (showSkinChooser && currentAccount != null) {
             SkinChooserDialog(
                 account = account,
                 onDismiss = { showSkinChooser = false },
@@ -243,7 +242,7 @@ fun LauncherScreen(
             )
         }
 
-        if (showSkinEditor && account != null) {
+        if (showSkinEditor && currentAccount != null) {
             SkinEditorDialog(
                 account = account,
                 onDismiss = { showSkinEditor = false }
