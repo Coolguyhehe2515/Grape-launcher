@@ -1,24 +1,20 @@
 {
     "info": {
         "name": {
-            "default": "default",
+            "default": "Krispy",
             "matchQueue": [
                 {
-                    "language_tag": "zh",
-                    "value": "預設"
-                },
-                {
-                    "language_tag": "zh-CN",
-                    "value": "默认"
+                    "language_tag": "zh-EN",
+                    "value": "chill"
                 }
             ]
         },
         "author": {
-            "default": "MovTery",
+            "default": "KrispyBRN",
             "matchQueue": [
                 {
-                    "language_tag": "zh",
-                    "value": "墨北MovTery"
+                    "language_tag": "zh-EN",
+                    "value": "chill"
                 }
             ]
         },
@@ -27,7 +23,7 @@
             "matchQueue": []
         },
         "versionCode": 0,
-        "versionName": "2.0"
+        "versionName": "1.0"
     },
     "layers": [
         {
@@ -156,7 +152,7 @@
                     },
                     "uuid": "8d52b73e45504bc291",
                     "position": {
-                        "x": 1154,
+                        "x": 1169,
                         "y": 0
                     },
                     "buttonSize": {
@@ -407,14 +403,14 @@
                     },
                     "uuid": "90dd63546ff14a92be",
                     "position": {
-                        "x": 7614,
-                        "y": 5480
+                        "x": 6486,
+                        "y": 3939
                     },
                     "buttonSize": {
-                        "type": "percentage",
-                        "widthDp": 50.0,
-                        "heightDp": 50.0,
-                        "widthPercentage": 2150,
+                        "type": "dp",
+                        "widthDp": 125.0,
+                        "heightDp": 125.0,
+                        "widthPercentage": 2519,
                         "heightPercentage": 1380,
                         "widthReference": "screen_height",
                         "heightReference": "screen_height"
@@ -447,13 +443,13 @@
                     },
                     "uuid": "96e156843d754adda4",
                     "position": {
-                        "x": 8690,
-                        "y": 5480
+                        "x": 8100,
+                        "y": 7900
                     },
                     "buttonSize": {
-                        "type": "percentage",
-                        "widthDp": 50.0,
-                        "heightDp": 50.0,
+                        "type": "dp",
+                        "widthDp": 110.0,
+                        "heightDp": 110.0,
                         "widthPercentage": 2150,
                         "heightPercentage": 1380,
                         "widthReference": "screen_height",
@@ -478,8 +474,8 @@
                     },
                     "uuid": "53bea7b9f6974f6b9a",
                     "position": {
-                        "x": 7614,
-                        "y": 7080
+                        "x": 9242,
+                        "y": 3888
                     },
                     "buttonSize": {
                         "type": "percentage",
@@ -509,13 +505,13 @@
                     },
                     "uuid": "ece30bbe48204713ae",
                     "position": {
-                        "x": 8690,
-                        "y": 7080
+                        "x": 9746,
+                        "y": 9043
                     },
                     "buttonSize": {
-                        "type": "percentage",
-                        "widthDp": 50.0,
-                        "heightDp": 50.0,
+                        "type": "dp",
+                        "widthDp": 90.0,
+                        "heightDp": 90.0,
                         "widthPercentage": 2150,
                         "heightPercentage": 1380,
                         "widthReference": "screen_height",
@@ -544,16 +540,11 @@
                 {
                     "uuid": "b581292c47294e099d",
                     "position": {
-                        "x": 1121,
-                        "y": 7953
+                        "x": 0,
+                        "y": 9157
                     },
                     "sizePercentage": 3417,
-                    "lockEvents": [
-                        {
-                            "type": "key",
-                            "key": "GLFW_KEY_LEFT_CONTROL"
-                        }
-                    ]
+                    "canLock": false
                 }
             ]
         }
