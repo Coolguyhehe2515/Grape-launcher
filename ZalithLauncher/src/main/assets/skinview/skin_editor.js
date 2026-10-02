@@ -11,7 +11,7 @@ let viewer=new skinview3d.SkinViewer({
 });
 viewer.controls.enableZoom=false;
 viewer.controls.enablePan=false;
-viewer.controls.enableRotate=true;
+viewer.controls.enableRotate=false;
 viewer.animation=null;
 viewer.globalLight.intensity=3;
 viewer.cameraLight.intensity=1;
@@ -77,26 +77,28 @@ function paintAt(x,y){
   if(!skinReady)return;
   const w=paintLayer.width,h=paintLayer.height;
   const nx=x/w,ny=y/h;
-  let r;
-  if(nx>=.37&&nx<=.63&&ny>=.08&&ny<=.30) r={u:8,v:8,w:8,h:8};
-  else if(nx>=.39&&nx<=.61&&ny>.29&&ny<=.63) r={u:20,v:20,w:8,h:12};
-  else if(nx>=.25&&nx<.40&&ny>.30&&ny<=.64) r={u:44,v:20,w:4,h:12};
-  else if(nx>.60&&nx<=.75&&ny>.30&&ny<=.64) r={u:36,v:52,w:4,h:12};
-  else if(nx>=.39&&nx<.50&&ny>.61&&ny<=.95) r={u:4,v:20,w:4,h:12};
-  else if(nx>=.50&&nx<=.61&&ny>.61&&ny<=.95) r={u:20,v:52,w:4,h:12};
-  else return;
 
-  const tx=Math.floor(r.u+(nx-(r===undefined?0:0))*r.w);
-  const ty=Math.floor(r.v+(ny)*r.h);
-  const localX=Math.max(0,Math.min(r.w-1,Math.floor(((nx*w)-((r.u===8?0:0))))));
-  const localY=Math.max(0,Math.min(r.h-1,Math.floor(ny*h)));
-  const u=Math.max(0,Math.min(63,Math.floor(r.u+(localX/r.w)*r.w)));
-  const v=Math.max(0,Math.min(63,Math.floor(r.v+(localY/r.h)*r.h)));
+  const regions=[
+    {sx0:.37,sx1:.63,sy0:.08,sy1:.30,u:8,v:8,uw:8,uh:8},
+    {sx0:.39,sx1:.61,sy0:.29,sy1:.63,u:20,v:20,uw:8,uh:12},
+    {sx0:.25,sx1:.40,sy0:.30,sy1:.64,u:44,v:20,uw:4,uh:12},
+    {sx0:.60,sx1:.75,sy0:.30,sy1:.64,u:36,v:52,uw:4,uh:12},
+    {sx0:.39,sx1:.50,sy0:.61,sy1:.95,u:4,v:20,uw:4,uh:12},
+    {sx0:.50,sx1:.61,sy0:.61,sy1:.95,u:20,v:52,uw:4,uh:12}
+  ];
+
+  const region=regions.find(r=>nx>=r.sx0&&nx<=r.sx1&&ny>=r.sy0&&ny<=r.sy1);
+  if(!region)return;
+
+  const px=Math.max(0,Math.min(region.uw-1,Math.floor((nx-region.sx0)/(region.sx1-region.sx0)*region.uw)));
+  const py=Math.max(0,Math.min(region.uh-1,Math.floor((ny-region.sy0)/(region.sy1-region.sy0)*region.uh)));
+  const u=Math.floor(region.u+px);
+  const v=Math.floor(region.v+py);
+
   textureCtx.fillStyle=paintColor;
   textureCtx.fillRect(u,v,1,1);
   viewer.loadSkin(textureCanvas);
 }
-
 paintLayer.addEventListener("pointerdown",e=>{
   drawing=true; lastPoint={x:e.offsetX,y:e.offsetY};
   paintLayer.setPointerCapture(e.pointerId);
