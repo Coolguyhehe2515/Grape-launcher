@@ -209,7 +209,7 @@ fun LauncherScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(end = 12.dp, bottom = 8.dp),
+                    .padding(end = 12.dp, bottom = 12.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 ScalingActionButton(
@@ -225,8 +225,6 @@ fun LauncherScreen(
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.weight(1f))
         }
 
         if (showSkinChooser && currentAccount != null) {
