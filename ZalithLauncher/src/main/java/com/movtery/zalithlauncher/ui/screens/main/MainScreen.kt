@@ -376,6 +376,13 @@ private fun <E: TitledNavKey> TopBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (inLauncherScreen) {
+                    IconButton(onClick = openFileManager) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_folder_filled),
+                            contentDescription = stringResource(R.string.fm_activity_name)
+                        )
+                    }
+
                     TopBarRailItem(
                         selected = false,
                         painter = painterResource(R.drawable.ic_settings_filled),
