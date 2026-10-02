@@ -14,6 +14,9 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -218,8 +221,8 @@ fun SkinEditorDialog(
                             androidx.compose.foundation.layout.Box(
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .androidx.compose.foundation.background(color, androidx.compose.foundation.shape.CircleShape)
-                                    .androidx.compose.foundation.clickable {
+                                    .background(color, CircleShape)
+                                    .clickable {
                                         webView.evaluateJavascript("setPaintColor('$hex')", null)
                                     }
                             )
