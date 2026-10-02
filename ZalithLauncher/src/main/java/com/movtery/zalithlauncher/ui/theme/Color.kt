@@ -20,11 +20,11 @@ package com.movtery.zalithlauncher.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = ColorTheme(Color(0xFFA63A17), Color(0xFF723D57), Color(0xFF426469), Color(0xFF006684), Color(0xFF676014), Color(0xFF5E5E5F), Color(0xFF004814))
+val primaryLight = ColorTheme(Color(0xFFA63A17), Color(0xFF8B5CF6), Color(0xFF426469), Color(0xFF006684), Color(0xFF676014), Color(0xFF5E5E5F), Color(0xFF004814))
 val onPrimaryLight = ColorTheme(Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF))
-val primaryContainerLight = ColorTheme(Color(0xFFFE7A52), Color(0xFF9B607C), Color(0xFFB1D5DB), Color(0xFF4CAFD6), Color(0xFFEFE58B), Color(0xFFAEAEAE), Color(0xFF276E31))
+val primaryContainerLight = ColorTheme(Color(0xFFFE7A52), Color(0xFF6D3FC1), Color(0xFFB1D5DB), Color(0xFF4CAFD6), Color(0xFFEFE58B), Color(0xFFAEAEAE), Color(0xFF276E31))
 val onPrimaryContainerLight = ColorTheme(Color(0xFF2F0700), Color(0xFFFFFFFF), Color(0xFF1E4146), Color(0xFF001B26), Color(0xFF1F1C00), Color(0xFF222324), Color(0xFFFFFFFF))
-val secondaryLight = ColorTheme(Color(0xFF894F3D), Color(0xFF725762), Color(0xFF546163), Color(0xFF426372), Color(0xFF635F41), Color(0xFF5F5E5E), Color(0xFF4A6548))
+val secondaryLight = ColorTheme(Color(0xFF894F3D), Color(0xFF6B4FA1), Color(0xFF546163), Color(0xFF426372), Color(0xFF635F41), Color(0xFF5F5E5E), Color(0xFF4A6548))
 val onSecondaryLight = ColorTheme(Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF))
 val secondaryContainerLight = ColorTheme(Color(0xFFFFBBA7), Color(0xFFFFDAE8), Color(0xFFD8E6E9), Color(0xFFCAECFE), Color(0xFFEAE3BE), Color(0xFFE8E6E5), Color(0xFFCFEFCA))
 val onSecondaryContainerLight = ColorTheme(Color(0xFF5C2B1C), Color(0xFF5B414D), Color(0xFF3E4B4D), Color(0xFF2E4F5D), Color(0xFF1E1C05), Color(0xFF4A4A4A), Color(0xFF365135))
@@ -47,7 +47,7 @@ val outlineVariantLight = ColorTheme(Color(0xFFDFC0B7), Color(0xFFD4C2C8), Color
 val scrimLight = ColorTheme(Color(0xFF000000), Color(0xFF000000), Color(0xFF000000), Color(0xFF000000), Color(0xFF000000), Color(0xFF000000), Color(0xFF000000))
 val inverseSurfaceLight = ColorTheme(Color(0xFF3B2D2A), Color(0xFF352F31), Color(0xFF2F3131), Color(0xFF2D3134), Color(0xFF323128), Color(0xFF313030), Color(0xFF2D322C))
 val inverseOnSurfaceLight = ColorTheme(Color(0xFFFFEDE8), Color(0xFFF9EEF0), Color(0xFFF1F1F0), Color(0xFFEEF1F4), Color(0xFFF5F0E3), Color(0xFFF4F0EF), Color(0xFFEEF2E9))
-val inversePrimaryLight = ColorTheme(Color(0xFFFFB59F), Color(0xFFF9B2D2), Color(0xFFA9CDD3), Color(0xFF73D2FB), Color(0xFFD2C972), Color(0xFFC7C6C6), Color(0xFF8ED88E))
+val inversePrimaryLight = ColorTheme(Color(0xFFFFB59F), Color(0xFFD0BCFF), Color(0xFFA9CDD3), Color(0xFF73D2FB), Color(0xFFD2C972), Color(0xFFC7C6C6), Color(0xFF8ED88E))
 val surfaceDimLight = ColorTheme(Color(0xFFEBD5D0), Color(0xFFE2D7DA), Color(0xFFDADADA), Color(0xFFD7DADE), Color(0xFFDEDACC), Color(0xFFDDD9D9), Color(0xFFD8DBD3))
 val surfaceBrightLight = ColorTheme(Color(0xFFFFF8F6), Color(0xFFFFF8F8), Color(0xFFFAF9F9), Color(0xFFF6FAFD), Color(0xFFFEF9EB), Color(0xFFFCF8F8), Color(0xFFF7FBF2))
 val surfaceContainerLowestLight = ColorTheme(Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFFFFFFF))
@@ -57,10 +57,10 @@ val surfaceContainerHighLight = ColorTheme(Color(0xFFFAE3DD), Color(0xFFF1E5E8),
 val surfaceContainerHighestLight = ColorTheme(Color(0xFFF4DED8), Color(0xFFEBE0E2), Color(0xFFE3E2E2), Color(0xFFDFE3E6), Color(0xFFE7E2D5), Color(0xFFE5E2E1), Color(0xFFE0E4DB))
 
 val primaryDark = ColorTheme(Color(0xFFFFB59F), Color(0xFFF9B2D2), Color(0xFFCEF3F9), Color(0xFF73D2FB), Color(0xFFD2C972), Color(0xFFC7C6C6), Color(0xFF8ED88E))
-val onPrimaryDark = ColorTheme(Color(0xFF5F1600), Color(0xFF4F2039), Color(0xFF11353A), Color(0xFF003546), Color(0xFF353100), Color(0xFF2F3131), Color(0xFF00390F))
-val primaryContainerDark = ColorTheme(Color(0xFFC4502B), Color(0xFF915873), Color(0xFFA5C9CF), Color(0xFF007EA2), Color(0xFF4E4800), Color(0xFF9B9B9B), Color(0xFF005219))
+val onPrimaryDark = ColorTheme(Color(0xFF5F1600), Color(0xFF381E72), Color(0xFF11353A), Color(0xFF003546), Color(0xFF353100), Color(0xFF2F3131), Color(0xFF00390F))
+val primaryContainerDark = ColorTheme(Color(0xFFC4502B), Color(0xFF6D4AA8), Color(0xFFA5C9CF), Color(0xFF007EA2), Color(0xFF4E4800), Color(0xFF9B9B9B), Color(0xFF005219))
 val onPrimaryContainerDark = ColorTheme(Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFF14383D), Color(0xFFFFFFFF), Color(0xFFEFE58B), Color(0xFF0B0C0D), Color(0xFFA6F2A5))
-val secondaryDark = ColorTheme(Color(0xFFFFB59F), Color(0xFFE0BDCB), Color(0xFFBBC9CB), Color(0xFFAACBDD), Color(0xFFCDC7A3), Color(0xFFC8C6C6), Color(0xFFB0CFAB))
+val secondaryDark = ColorTheme(Color(0xFFFFB59F), Color(0xFFD8BFFB), Color(0xFFBBC9CB), Color(0xFFAACBDD), Color(0xFFCDC7A3), Color(0xFFC8C6C6), Color(0xFFB0CFAB))
 val onSecondaryDark = ColorTheme(Color(0xFF512214), Color(0xFF412A34), Color(0xFF263335), Color(0xFF113442), Color(0xFF343117), Color(0xFF303030), Color(0xFF1C361D))
 val secondaryContainerDark = ColorTheme(Color(0xFF643122), Color(0xFF4F3641), Color(0xFF333F41), Color(0xFF204250), Color(0xFF4B482C), Color(0xFF3D3D3D), Color(0xFF294329))
 val onSecondaryContainerDark = ColorTheme(Color(0xFFFFC8B9), Color(0xFFEBC7D5), Color(0xFFC5D3D6), Color(0xFFB4D6E8), Color(0xFFEAE3BE), Color(0xFFD3D0D0), Color(0xFFB9D9B5))
