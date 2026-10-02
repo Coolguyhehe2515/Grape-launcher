@@ -206,17 +206,24 @@ fun LauncherScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            ScalingActionButton(
-                modifier = Modifier.fillMaxWidth(),
-                enabled = canLaunch,
-                onClick = {
-                    version?.let(onLaunchGame)
-                }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 12.dp, bottom = 8.dp),
+                contentAlignment = Alignment.CenterEnd
             ) {
-                Text(
-                    text = stringResource(R.string.main_launch_game),
-                    style = MaterialTheme.typography.titleMedium
-                )
+                ScalingActionButton(
+                    modifier = Modifier.size(width = 150.dp, height = 52.dp),
+                    enabled = canLaunch,
+                    onClick = {
+                        version?.let(onLaunchGame)
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.main_launch_game),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.weight(1f))
