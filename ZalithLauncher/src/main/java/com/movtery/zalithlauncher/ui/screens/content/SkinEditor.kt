@@ -10,8 +10,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.webkit.JavascriptInterface
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.background
@@ -42,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.webkit.WebViewAssetLoader
 import com.movtery.zalithlauncher.game.account.Account
 import com.movtery.zalithlauncher.game.account.AccountsManager
 import java.io.ByteArrayOutputStream
@@ -104,12 +101,6 @@ fun SkinEditorDialog(
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
-    val assetLoader = remember(context) {
-        WebViewAssetLoader.Builder()
-            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(context))
-            .build()
-    }
-
     val initialSkin = remember(account) {
         runCatching {
             val bitmap = if (account.hasSkinFile) {
@@ -170,19 +161,21 @@ fun SkinEditorDialog(
                     WebView(context).apply {
                         settings.javaScriptEnabled = true
                         settings.domStorageEnabled = true
-                        settings.allowFileAccess = false
-                        settings.allowContentAccess = true
+                        settings.allowFileAccess = true
+                        settings.allowContentAccess = false
+                        settings.allowUniversalAccessFromFileURLs = false
+                        settings.allowFileAccessFromFileURLs = false
                         overScrollMode = WebView.OVER_SCROLL_NEVER
                         addJavascriptInterface(bridge, "GrapeSkin")
                         webViewClient = object : WebViewClient() {
-                            override fun shouldInterceptRequest(
-                                view: WebView,
-                                request: WebResourceRequest
-                            ): WebResourceResponse? {
-                                return assetLoader.shouldInterceptRequest(request.url)
+                            override fun onPageFinished(view: WebView, url: String) {
+                                view.evaluateJavascript(
+                                    "loadEditorSkin('data:image/png;base64,$initialSkin')",
+                                    null
+                                )
                             }
                         }
-                        loadUrl("https://appassets.androidplatform.net/assets/skin_editor.html")
+                        loadUrl("file:///android_asset/skinview/skin_editor.html")
                     }
                 }
 
@@ -198,12 +191,7 @@ fun SkinEditorDialog(
                         .fillMaxWidth()
                         .height(390.dp),
                     factory = { webView },
-                    update = {
-                        it.evaluateJavascript(
-                            "loadEditorSkin('data:image/png;base64,$initialSkin')",
-                            null
-                        )
-                    }
+                    update = {}
                 )
 
                 Row(
