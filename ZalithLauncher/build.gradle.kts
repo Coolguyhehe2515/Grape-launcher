@@ -153,6 +153,13 @@ androidComponents {
                         val tag = "JREAssetsCleanup"
                         logger.lifecycle("[$tag] arch: $projectArch")
                         val jreList = listOf("jre-8", "jre-17", "jre-21", "jre-25")
+                        // Grape Launcher targets Minecraft Java 1.12.2, which uses Internal 8.
+                        listOf("jre-17", "jre-21", "jre-25").forEach { unusedRuntime ->
+                            val unusedDir = File(assetsDir, "runtimes/$unusedRuntime")
+                            if (unusedDir.exists()) {
+                                logger.lifecycle("[$tag] remove unused runtime: $unusedDir : ${unusedDir.deleteRecursively()}")
+                            }
+                        }
                         jreList.forEach { jreVersion ->
                             val runtimeDir = File("$assetsDir/runtimes/$jreVersion")
                             logger.lifecycle("[$tag] runtimeDir: ${runtimeDir.absolutePath}")
